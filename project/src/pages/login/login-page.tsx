@@ -1,6 +1,6 @@
 function LoginPage(): JSX.Element {
   return (
-    <div>Hello MainPage</div>
+    <div>Hello LoginPage</div>
   );
 }
 
