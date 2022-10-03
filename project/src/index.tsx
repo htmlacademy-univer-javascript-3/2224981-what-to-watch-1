@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 
-import FilmInfo from './types/FilmInfo';
+import FilmInfo from './types/film-info';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
