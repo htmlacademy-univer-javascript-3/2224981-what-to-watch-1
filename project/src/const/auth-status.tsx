@@ -1,6 +1,6 @@
 enum AuthStatus {
-  AUTH,
-  NO_AUTH
+  Auth,
+  NoAuth
 }
 
 export default AuthStatus;
