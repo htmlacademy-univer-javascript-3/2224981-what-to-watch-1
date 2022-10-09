@@ -8,7 +8,7 @@ type PrivateRouteProps = {
 };
 
 function PrivateRoute(props: PrivateRouteProps): JSX.Element {
-  return props.status === AuthStatus.AUTH
+  return props.status === AuthStatus.Auth
     ? props.children
     : <Navigate to={'/login'}/>;
 }

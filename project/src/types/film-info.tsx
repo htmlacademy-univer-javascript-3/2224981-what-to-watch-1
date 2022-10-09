@@ -1,7 +1,21 @@
 type FilmInfo = {
-  title: string;
+  id: number;
+  name: string;
+  posterImage: string;
+  previewImage: string;
+  backgroundImage: string;
+  backgroundColor: string;
+  videoLink: string;
+  previewVideoLink: string;
+  description: string;
+  rating: number;
+  scoresCount: number;
+  director: string;
+  starring: string[];
+  runTime: number;
   genre: string;
-  releaseYear: number;
-};
+  released: number;
+  isFavorite: boolean;
+}
 
 export default FilmInfo;
