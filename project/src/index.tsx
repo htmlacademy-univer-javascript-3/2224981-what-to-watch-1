@@ -2,20 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 
-import FilmInfo from './types/film-info';
+import {filmMocks} from './mocks/films';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
-const currentFilm: FilmInfo = {
-  title: 'Fantastic Beasts: The Crimes of Grindelwald',
-  genre: 'Drama',
-  releaseYear: 2014
-};
+const currentFilm = filmMocks[0];
 
 root.render(
   <React.StrictMode>
-    <App filmPromo={currentFilm} />
+    <App filmPromo={currentFilm} films={filmMocks}/>
   </React.StrictMode>,
 );
