@@ -10,6 +10,7 @@ import FilmPage from '../../pages/film/film-page';
 import PlayerPage from '../../pages/player/player-page';
 import Page404 from '../page-404/page-404';
 import ReviewPage from '../../pages/review/review-page';
+import ScrollToTop from '../scroll-to-top/scroll-to-top';
 
 type AppProps = {
   filmPromo: FilmInfo,
@@ -19,6 +20,7 @@ type AppProps = {
 function App(props: AppProps): JSX.Element {
   return (
     <BrowserRouter>
+      <ScrollToTop/>
       <Routes>
         <Route path={AppRoutes.Root}>
           <Route index element={<MainPage filmPromo={props.filmPromo} films={props.films}/>}/>
@@ -30,7 +32,7 @@ function App(props: AppProps): JSX.Element {
           }
           />
           <Route path={`${AppRoutes.FilmsRoot}:id`}>
-            <Route index element={<FilmPage film={props.films[1]} recommendedFilms={props.films.slice(0, 4)}/>}/>
+            <Route index element={<FilmPage films={props.films}/>}/>
             <Route path={AppRoutes.FilmsReview} element={<ReviewPage film={props.films[1]}/>}/>
           </Route>
           <Route path={`${AppRoutes.PlayerRoot}:id`}>
