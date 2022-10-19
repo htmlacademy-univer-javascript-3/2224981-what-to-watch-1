@@ -1,4 +1,4 @@
-import TabNames from '../tab-names';
+import TabNames from '../../../const/tab-names';
 
 type TabsProps = {
   currentTab: TabNames,
