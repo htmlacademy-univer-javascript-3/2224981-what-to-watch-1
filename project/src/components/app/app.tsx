@@ -1,5 +1,4 @@
 import MainPage from '../../pages/main/main-page';
-import FilmInfo from '../../types/film-info';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import LoginPage from '../../pages/login/login-page';
 import AppRoutes from '../../const/app-routes';
@@ -11,32 +10,37 @@ import PlayerPage from '../../pages/player/player-page';
 import Page404 from '../page-404/page-404';
 import ReviewPage from '../../pages/review/review-page';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppState} from '../../types/app-state';
+import {fillAllFilms} from '../../store/action';
+import {filmMocks} from '../../mocks/films';
 
-type AppProps = {
-  filmPromo: FilmInfo,
-  films: FilmInfo[]
-}
+function App(): JSX.Element {
+  const dispatch = useDispatch();
+  dispatch(fillAllFilms(filmMocks));
 
-function App(props: AppProps): JSX.Element {
+  const films = useSelector((state: AppState) => state.films);
+  const filmPromo = films[0];
+
   return (
     <BrowserRouter>
       <ScrollToTop/>
       <Routes>
         <Route path={AppRoutes.Root}>
-          <Route index element={<MainPage filmPromo={props.filmPromo} films={props.films}/>}/>
+          <Route index element={<MainPage filmPromo={filmPromo} films={films}/>}/>
           <Route path={AppRoutes.Login} element={<LoginPage/>}/>
           <Route path={AppRoutes.MyList} element={
             <PrivateRoute status={AuthStatus.NoAuth}>
-              <MyListPage films={props.films}/>
+              <MyListPage films={films}/>
             </PrivateRoute>
           }
           />
           <Route path={`${AppRoutes.FilmsRoot}:id`}>
-            <Route index element={<FilmPage films={props.films}/>}/>
-            <Route path={AppRoutes.FilmsReview} element={<ReviewPage film={props.films[1]}/>}/>
+            <Route index element={<FilmPage films={films}/>}/>
+            <Route path={AppRoutes.FilmsReview} element={<ReviewPage film={films[1]}/>}/>
           </Route>
           <Route path={`${AppRoutes.PlayerRoot}:id`}>
-            <Route index element={<PlayerPage film={props.films[2]}/>}/>
+            <Route index element={<PlayerPage film={films[2]}/>}/>
           </Route>
         </Route>
         <Route path='*' element={<Page404/>}/>

@@ -6,7 +6,7 @@ import AppRoutes from '../../const/app-routes';
 import FilmHeader from '../../components/film-header/film-header';
 import Page404 from '../../components/page-404/page-404';
 import TabManager from '../../components/film-tabs/tab-manager/tab-manager';
-import {findById, findSimilarByGenre} from '../../utils/film-manager';
+import {findById, findByGenre} from '../../utils/film-manager';
 
 type FilmPageProps = {
   films: FilmInfo[];
@@ -20,7 +20,7 @@ function FilmPage(props: FilmPageProps): JSX.Element {
     return <Page404/>;
   }
 
-  const recommendedFilms = findSimilarByGenre(props.films, film.id, film.genre);
+  const recommendedFilms = findByGenre(props.films, film.genre, film.id);
 
   return (
     <Fragment>
