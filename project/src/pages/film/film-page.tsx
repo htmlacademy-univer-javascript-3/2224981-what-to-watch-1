@@ -74,9 +74,7 @@ function FilmPage(props: FilmPageProps): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <div className="catalog__films-list">
-            <FilmList films={recommendedFilms} showGenres={false}/>
-          </div>
+          <FilmList films={recommendedFilms} showGenres={false}/>
         </section>
 
         <footer className="page-footer">

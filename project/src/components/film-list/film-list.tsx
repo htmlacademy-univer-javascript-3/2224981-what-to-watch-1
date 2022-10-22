@@ -1,9 +1,10 @@
 import FilmInfo from '../../types/film-info';
 import FilmCard from '../film-card/film-card';
-import {useState} from 'react';
+import {Fragment, useState} from 'react';
 import CategoryTabs from '../category-tabs/category-tabs';
 import {toGenreDict} from '../../utils/film-manager';
-import {ALL_GENRES_KEY} from '../../const/simple-const';
+import {ALL_GENRES_KEY, NEXT_LOADING_CARDS_AMOUNT} from '../../const/simple-const';
+import ShowMoreButton from '../show-more-button/show-more-button';
 
 type FilmListProps = {
   films: FilmInfo[],
@@ -12,33 +13,36 @@ type FilmListProps = {
 
 function FilmList(props: FilmListProps) {
   const [/*activeFilmCardId*/, setActiveFilmCardId] = useState(-1);
-  const [shownFilms, setShownFilms] = useState(props.films);
+  const [genreFilms, setGenreFilms] = useState(props.films);
+  const [shownFilmsMul, setShownFilmsMul] = useState(NEXT_LOADING_CARDS_AMOUNT);
 
   const genreDict = toGenreDict(props.films);
   const tabs = Object.keys(genreDict);
 
   const changeTab = (tab: string) => {
     if (tab === ALL_GENRES_KEY) {
-      setShownFilms(props.films);
+      setGenreFilms(props.films);
     } else {
-      setShownFilms(genreDict[tab]);
+      setGenreFilms(genreDict[tab]);
+    }
+  };
+
+  const increaseShownFilms = () => {
+    if (shownFilmsMul < genreFilms.length) {
+      setShownFilmsMul(shownFilmsMul + NEXT_LOADING_CARDS_AMOUNT);
     }
   };
 
   return (
-    <section className="catalog">
-      <h2 className="catalog__title visually-hidden">Catalog</h2>
-
+    <Fragment>
       {props.showGenres && <CategoryTabs tabs={tabs} onChangeTab={changeTab}/>}
 
       <div className="catalog__films-list">
-        {shownFilms.map((item) => <FilmCard key={item.id} filmInfo={item} onMouseEnterHandler={() => {setActiveFilmCardId(item.id);}} onMouseLeaveHandler={() => {setActiveFilmCardId(-1);}}/>)}
+        {genreFilms.slice(0, shownFilmsMul).map((item) => <FilmCard key={item.id} filmInfo={item} onMouseEnterHandler={() => {setActiveFilmCardId(item.id);}} onMouseLeaveHandler={() => {setActiveFilmCardId(-1);}}/>)}
       </div>
 
-      <div className="catalog__more">
-        <button className="catalog__button" type="button">Show more</button>
-      </div>
-    </section>
+      {shownFilmsMul < genreFilms.length && <ShowMoreButton onClick={increaseShownFilms}/>}
+    </Fragment>
   );
 }
 
