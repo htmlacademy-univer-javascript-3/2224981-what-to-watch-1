@@ -35,9 +35,7 @@ function MyListPage(props: MyListPageProps): JSX.Element {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <div className="catalog__films-list">
-          <FilmList films={props.films} showGenres/>
-        </div>
+        <FilmList films={props.films} showGenres/>
       </section>
 
       <footer className="page-footer">

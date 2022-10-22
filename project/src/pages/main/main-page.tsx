@@ -73,7 +73,11 @@ function MainPage(props: MainPageProps): JSX.Element {
       </section>
 
       <div className="page-content">
-        <FilmList films={props.films} showGenres></FilmList>
+        <section className="catalog">
+          <h2 className="catalog__title visually-hidden">Catalog</h2>
+
+          <FilmList films={props.films} showGenres></FilmList>
+        </section>
 
         <footer className="page-footer">
           <div className="logo">
