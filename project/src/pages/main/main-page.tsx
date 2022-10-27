@@ -1,55 +1,42 @@
-import FilmInfo from '../../types/film-info';
 import FilmList from '../../components/film-list/film-list';
 import AppRoutes from '../../const/app-routes';
 import {Link} from 'react-router-dom';
+import Header from '../../components/header/header';
+import {useSelector} from 'react-redux';
+import {AppState} from '../../types/app-state';
 
-type MainPageProps = {
-  filmPromo: FilmInfo;
-  films: FilmInfo[]
-}
+function MainPage(): JSX.Element {
+  const films = useSelector((state: AppState) => state.films);
+  const filmPromo = films[0];
 
-function MainPage(props: MainPageProps): JSX.Element {
+  if (!filmPromo) {
+    return (
+      <div>{null}</div>
+    );
+  }
+
   return (
     <div>
       <section className="film-card">
         <div className="film-card__bg">
-          <img src={props.filmPromo.previewImage} alt="The Grand Budapest Hotel" />
+          <img src={filmPromo.previewImage} alt="The Grand Budapest Hotel" />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <header className="page-header film-card__head">
-          <div className="logo">
-            <a className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
-            </li>
-          </ul>
-        </header>
+        <Header/>
 
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src={props.filmPromo.posterImage} alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              <img src={filmPromo.posterImage} alt="The Grand Budapest Hotel poster" width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{props.filmPromo.name}</h2>
+              <h2 className="film-card__title">{filmPromo.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{props.filmPromo.genre}</span>
-                <span className="film-card__year">{props.filmPromo.released}</span>
+                <span className="film-card__genre">{filmPromo.genre}</span>
+                <span className="film-card__year">{filmPromo.released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -76,7 +63,7 @@ function MainPage(props: MainPageProps): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <FilmList films={props.films} showGenres></FilmList>
+          <FilmList films={films} showGenres></FilmList>
         </section>
 
         <footer className="page-footer">
