@@ -10,37 +10,41 @@ import PlayerPage from '../../pages/player/player-page';
 import Page404 from '../page-404/page-404';
 import ReviewPage from '../../pages/review/review-page';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
-import {useDispatch, useSelector} from 'react-redux';
 import {AppState} from '../../types/app-state';
-import {fillAllFilms} from '../../store/action';
+
+import {useSelector} from 'react-redux';
+import {AppStatus} from '../../types/app-status';
+import Spinner from '../spinner/spinner';
 import {filmMocks} from '../../mocks/films';
 
 function App(): JSX.Element {
-  const dispatch = useDispatch();
-  dispatch(fillAllFilms(filmMocks));
+  const {auth, status} = useSelector((state: AppState) => state);
 
-  const films = useSelector((state: AppState) => state.films);
-  const filmPromo = films[0];
+  if (auth === AuthStatus.Unknown || status === AppStatus.Loading) {
+    return (
+      <Spinner/>
+    );
+  }
 
   return (
     <BrowserRouter>
       <ScrollToTop/>
       <Routes>
         <Route path={AppRoutes.Root}>
-          <Route index element={<MainPage filmPromo={filmPromo} films={films}/>}/>
+          <Route index element={<MainPage/>}/>
           <Route path={AppRoutes.Login} element={<LoginPage/>}/>
           <Route path={AppRoutes.MyList} element={
             <PrivateRoute status={AuthStatus.NoAuth}>
-              <MyListPage films={films}/>
+              <MyListPage films={filmMocks}/>
             </PrivateRoute>
           }
           />
           <Route path={`${AppRoutes.FilmsRoot}:id`}>
-            <Route index element={<FilmPage films={films}/>}/>
-            <Route path={AppRoutes.FilmsReview} element={<ReviewPage film={films[1]}/>}/>
+            <Route index element={<FilmPage films={filmMocks}/>}/>
+            <Route path={AppRoutes.FilmsReview} element={<ReviewPage film={filmMocks[1]}/>}/>
           </Route>
           <Route path={`${AppRoutes.PlayerRoot}:id`}>
-            <Route index element={<PlayerPage film={films[2]}/>}/>
+            <Route index element={<PlayerPage film={filmMocks[2]}/>}/>
           </Route>
         </Route>
         <Route path='*' element={<Page404/>}/>
