@@ -2,7 +2,7 @@ import FilmInfo from '../../types/film-info';
 import {Link} from 'react-router-dom';
 import AppRoutes from '../../const/app-routes';
 import ReviewCommentForm from '../../components/review-comment-form/review-comment-form';
-import Header from '../../components/header/header';
+import Header, {HeaderClass} from '../../components/header/header';
 
 type ReviewPaegeProps = {
   film: FilmInfo;
@@ -18,7 +18,7 @@ function ReviewPage(props: ReviewPaegeProps): JSX.Element {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <Header>
+        <Header showAvatar headerClass={HeaderClass.Empty}>
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">

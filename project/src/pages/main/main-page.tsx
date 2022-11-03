@@ -1,9 +1,8 @@
 import FilmList from '../../components/film-list/film-list';
-import AppRoutes from '../../const/app-routes';
-import {Link} from 'react-router-dom';
-import Header from '../../components/header/header';
+import Header, {HeaderClass} from '../../components/header/header';
 import {useSelector} from 'react-redux';
 import {AppState} from '../../types/app-state';
+import {Footer} from '../../components/footer/footer';
 
 function MainPage(): JSX.Element {
   const films = useSelector((state: AppState) => state.films);
@@ -24,7 +23,7 @@ function MainPage(): JSX.Element {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <Header/>
+        <Header showAvatar headerClass={HeaderClass.FilmCard}/>
 
         <div className="film-card__wrap">
           <div className="film-card__info">
@@ -66,19 +65,7 @@ function MainPage(): JSX.Element {
           <FilmList films={films} showGenres></FilmList>
         </section>
 
-        <footer className="page-footer">
-          <div className="logo">
-            <Link to={AppRoutes.Root} className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </Link>
-          </div>
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer/>
       </div>
     </div>
   );
