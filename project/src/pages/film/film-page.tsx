@@ -1,13 +1,13 @@
 import {Fragment} from 'react';
 import FilmInfo from '../../types/film-info';
 import FilmList from '../../components/film-list/film-list';
-import {Link, useParams} from 'react-router-dom';
-import AppRoutes from '../../const/app-routes';
+import {useParams} from 'react-router-dom';
 import FilmHeader from '../../components/film-header/film-header';
 import Page404 from '../../components/page-404/page-404';
 import TabManager from '../../components/film-tabs/tab-manager/tab-manager';
-import {findById, findByGenre} from '../../utils/film-manager';
-import Header from '../../components/header/header';
+import {findByGenre, findById} from '../../utils/film-manager';
+import Header, {HeaderClass} from '../../components/header/header';
+import {Footer} from '../../components/footer/footer';
 
 type FilmPageProps = {
   films: FilmInfo[];
@@ -34,7 +34,7 @@ function FilmPage(props: FilmPageProps): JSX.Element {
 
           <h1 className="visually-hidden">WTW</h1>
 
-          <Header/>
+          <Header showAvatar headerClass={HeaderClass.FilmCard}/>
 
           <FilmHeader film={film}/>
         </div>
@@ -59,19 +59,7 @@ function FilmPage(props: FilmPageProps): JSX.Element {
           <FilmList films={recommendedFilms} showGenres={false}/>
         </section>
 
-        <footer className="page-footer">
-          <div className="logo">
-            <Link to={AppRoutes.Root} className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </Link>
-          </div>
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer/>
       </div>
     </Fragment>
   );
