@@ -1,10 +1,16 @@
 import ReadyReview from '../../ready-review/ready-review';
-import {reviewMocks} from '../../../mocks/reviews';
+import {useAppSelector} from '../../../hooks/store-hooks';
 
 function ReviewsTab() {
-  const length = reviewMocks.length;
-  const leftColumn = reviewMocks.slice(0, length / 2 + 1);
-  const rightColumn = reviewMocks.slice(length / 2 + 1);
+  const comments = useAppSelector((state) => state.comments);
+
+  if (!comments) {
+    return (<div>{null}</div>);
+  }
+
+  const length = comments.length;
+  const leftColumn = comments.slice(0, length / 2 + 1);
+  const rightColumn = comments.slice(length / 2 + 1);
 
   return (
     <div className="film-card__reviews film-card__row">

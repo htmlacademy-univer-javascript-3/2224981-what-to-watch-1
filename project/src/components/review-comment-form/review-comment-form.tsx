@@ -1,13 +1,11 @@
 import {ChangeEvent, useState} from 'react';
-//import FilmInfo from '../../types/film-info';
-
-/*type CommentFormData = {
-  rating: number;
-  comment: string;
-}*/
+import FilmInfo from '../../types/film-info';
+import Page404 from '../page-404/page-404';
+import {useAppDispatch} from '../../hooks/store-hooks';
+import {sendComment} from '../../store/api-actions';
 
 type ReviewCommentFormProps = {
-  //film: FilmInfo;
+  film: FilmInfo;
 }
 
 function ReviewCommentForm(props: ReviewCommentFormProps): JSX.Element {
@@ -16,14 +14,24 @@ function ReviewCommentForm(props: ReviewCommentFormProps): JSX.Element {
     comment: ''
   });
 
+  const dispatch = useAppDispatch();
+
   const fieldChangeHandle = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {name, value} = evt.target;
     setFormData({...formData, [name]: value}); // вычисляемое свойство объекта
   };
 
+  const handleSubmit = () => {
+    dispatch(sendComment({filmId: props.film.id, ...formData}));
+  };
+
+  if (!props.film) {
+    return <Page404/>;
+  }
+
   return (
     <div className="add-review">
-      <form action="#" className="add-review__form">
+      <form action="#" className="add-review__form" onSubmit={handleSubmit}>
         <div className="rating">
           <div className="rating__stars">
             <input className="rating__input" onChange={fieldChangeHandle} id="star-10" type="radio" name="rating" value="10"/>
@@ -32,7 +40,7 @@ function ReviewCommentForm(props: ReviewCommentFormProps): JSX.Element {
             <input className="rating__input" onChange={fieldChangeHandle} id="star-9" type="radio" name="rating" value="9"/>
             <label className="rating__label" htmlFor="star-9">Rating 9</label>
 
-            <input className="rating__input" onChange={fieldChangeHandle} id="star-8" type="radio" name="rating" value="8" checked/>
+            <input className="rating__input" onChange={fieldChangeHandle} id="star-8" type="radio" name="rating" value="8"/>
             <label className="rating__label" htmlFor="star-8">Rating 8</label>
 
             <input className="rating__input" onChange={fieldChangeHandle} id="star-7" type="radio" name="rating" value="7"/>

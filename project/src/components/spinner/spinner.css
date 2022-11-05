@@ -14,7 +14,7 @@
     width: 100%;
     height: 100%;
     z-index: 999;
-    background-color: rgba(0, 0, 0, 50%);
+    background-color: #180202;
 }
 
 .spinner {
@@ -27,7 +27,7 @@
     top: 50%;
     transform: translate(-50%, -50%);
 
-    border: 10px solid #ffffff;
+    border: 10px solid #c9b37e;
     border-top-color: transparent;
     border-radius: 50%;
 

@@ -1,19 +1,48 @@
-import FilmInfo from '../../types/film-info';
-import {Link} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import AppRoutes from '../../const/app-routes';
 import ReviewCommentForm from '../../components/review-comment-form/review-comment-form';
 import Header, {HeaderClass} from '../../components/header/header';
+import {useEffect, useState} from 'react';
+import {useAppSelector} from '../../hooks/store-hooks';
+import Spinner from '../../components/spinner/spinner';
+import {dispatch} from '../../types/app-state';
+import {getFilmById} from '../../store/api-actions';
+import Page404 from '../../components/page-404/page-404';
+import {setFilm} from '../../store/action';
 
-type ReviewPaegeProps = {
-  film: FilmInfo;
-}
+function ReviewPage(): JSX.Element {
+  const id = Number(useParams().id);
+  const film = useAppSelector((state) => state.film);
 
-function ReviewPage(props: ReviewPaegeProps): JSX.Element {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let mounted = true;
+
+    if (mounted) {
+      dispatch(getFilmById(id))
+        .then(() => {setLoading(false);});
+    }
+
+    return () => {
+      mounted = false;
+      dispatch(setFilm(null));
+    };
+  }, [id]);
+
+  if (loading) {
+    return <Spinner/>;
+  }
+
+  if (!film) {
+    return <Page404/>;
+  }
+
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
         <div className="film-card__bg">
-          <img src={props.film.previewImage}/>
+          <img src={film.previewImage}/>
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -22,7 +51,7 @@ function ReviewPage(props: ReviewPaegeProps): JSX.Element {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={AppRoutes.FilmsRoot + props.film.id} className="breadcrumbs__link">{props.film.name}</Link>
+                <Link to={AppRoutes.FilmsRoot + film.id} className="breadcrumbs__link">{film.name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>
@@ -32,13 +61,13 @@ function ReviewPage(props: ReviewPaegeProps): JSX.Element {
         </Header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img src={props.film.posterImage} alt="The Grand Budapest Hotel poster" width="218"
+          <img src={film.posterImage} alt="The Grand Budapest Hotel poster" width="218"
             height="327"
           />
         </div>
       </div>
 
-      <ReviewCommentForm/>
+      <ReviewCommentForm film={film}/>
 
     </section>
   );

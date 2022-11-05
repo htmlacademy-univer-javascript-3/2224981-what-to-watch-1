@@ -1,0 +1,17 @@
+.parent {
+    margin: 0 auto;
+}
+
+.parent > h1 {
+    color: #d9cd8c;
+    text-align: center;
+
+    font-size: 7em;
+}
+
+.parent > div {
+    color: #d9cd8c;
+    text-align: center;
+
+    font-size: 3em;
+}
