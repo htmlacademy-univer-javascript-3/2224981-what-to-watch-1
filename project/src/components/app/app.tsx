@@ -30,7 +30,7 @@ function App(): JSX.Element {
     <BrowserRouter>
       <ScrollToTop/>
       <Routes>
-        <Route path={AppRoutes.Root}>
+        <Route path={'/'}>
           <Route index element={<MainPage/>}/>
           <Route path={AppRoutes.Login} element={<LoginPage/>}/>
           <Route path={AppRoutes.MyList} element={
@@ -40,8 +40,8 @@ function App(): JSX.Element {
           }
           />
           <Route path={`${AppRoutes.FilmsRoot}:id`}>
-            <Route index element={<FilmPage films={filmMocks}/>}/>
-            <Route path={AppRoutes.FilmsReview} element={<ReviewPage film={filmMocks[1]}/>}/>
+            <Route index element={<FilmPage/>}/>
+            <Route path={AppRoutes.FilmsReview} element={<ReviewPage/>}/>
           </Route>
           <Route path={`${AppRoutes.PlayerRoot}:id`}>
             <Route index element={<PlayerPage film={filmMocks[2]}/>}/>

@@ -1,9 +1,10 @@
 import {PropsWithChildren} from 'react';
 import {useSelector} from 'react-redux';
-import {AppState} from '../../types/app-state';
+import {AppState, dispatch} from '../../types/app-state';
 import AuthStatus from '../../const/auth-status';
 import {Link} from 'react-router-dom';
 import AppRoutes from '../../const/app-routes';
+import {logoutAction} from '../../store/api-actions';
 
 export enum HeaderClass {
   FilmCard = 'film-card__head',
@@ -18,6 +19,11 @@ type HeaderProps = {
 
 function Header(props: HeaderProps) {
   const status = useSelector((state: AppState) => state.auth);
+
+  const onSignOut = () => {
+    dispatch(logoutAction())
+      .then(() => window.location.reload());
+  };
 
   return (
     <header className={`page-header ${props.headerClass }`}>
@@ -46,8 +52,8 @@ function Header(props: HeaderProps) {
             <li className="user-block__item">
               {
                 status === AuthStatus.Auth
-                  ? <a className="user-block__link">Sign out</a>
-                  : <Link to={AppRoutes.Root + AppRoutes.Login} className="user-block__link">Sign in</Link>
+                  ? <a onClick={onSignOut} className="user-block__link">Sign out</a>
+                  : <Link to={`/${AppRoutes.Login}`} className="user-block__link">Sign in</Link>
               }
             </li>
           </ul>

@@ -1,12 +1,16 @@
 import {Link} from 'react-router-dom';
 import AppRoutes from '../../const/app-routes';
 import FilmInfo from '../../types/film-info';
+import {useAppSelector} from '../../hooks/store-hooks';
+import AuthStatus from '../../const/auth-status';
 
 type FilmHeaderProps = {
   film: FilmInfo;
 }
 
 function FilmHeader({film}: FilmHeaderProps) {
+  const auth = useAppSelector((state) => state.auth);
+
   return (
     <div className="film-card__wrap">
       <div className="film-card__desc">
@@ -30,7 +34,7 @@ function FilmHeader({film}: FilmHeaderProps) {
             <span>My list</span>
             <span className="film-card__count">9</span>
           </button>
-          <Link to={AppRoutes.FilmsRoot + film?.id + AppRoutes.FilmsReview} className="btn film-card__button">Add review</Link>
+          {auth === AuthStatus.Auth && <Link to={AppRoutes.FilmsReview} className="btn film-card__button">Add review</Link>}
         </div>
       </div>
     </div>

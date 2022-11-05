@@ -1,27 +1,47 @@
-import {Fragment} from 'react';
-import FilmInfo from '../../types/film-info';
+import {Fragment, useLayoutEffect} from 'react';
 import FilmList from '../../components/film-list/film-list';
 import {useParams} from 'react-router-dom';
 import FilmHeader from '../../components/film-header/film-header';
 import Page404 from '../../components/page-404/page-404';
 import TabManager from '../../components/film-tabs/tab-manager/tab-manager';
-import {findByGenre, findById} from '../../utils/film-manager';
 import Header, {HeaderClass} from '../../components/header/header';
 import {Footer} from '../../components/footer/footer';
+import {useAppDispatch, useAppSelector} from '../../hooks/store-hooks';
+import {AppStatus} from '../../types/app-status';
+import {getFullFilmInfo} from '../../store/api-actions';
+import {setComments, setFilm, setFilmsByGenre} from '../../store/action';
 
-type FilmPageProps = {
-  films: FilmInfo[];
-}
+function FilmPage(): JSX.Element {
+  const id = Number(useParams().id);
+  const film = useAppSelector((state) => state.film);
+  const recommendedFilms = useAppSelector((state) => state.oneGenreFilms);
 
-function FilmPage(props: FilmPageProps): JSX.Element {
-  const {id} = useParams();
-  const film = findById(props.films, Number(id));
+  const status = useAppSelector((state) => state.status);
 
-  if (film === undefined) {
-    return <Page404/>;
+  const dispatch = useAppDispatch();
+
+  useLayoutEffect(() => {
+    let mounted = true;
+
+    if (mounted) {
+      dispatch(getFullFilmInfo(id));
+    }
+
+    return () => {
+      mounted = false;
+      dispatch(setFilm(null));
+      dispatch(setFilmsByGenre([]));
+      dispatch(setComments([]));
+    };
+  }, [id]);
+
+  if (status === AppStatus.Loading) {
+    return (<div>{null}</div>);
   }
 
-  const recommendedFilms = findByGenre(props.films, film.genre, film.id);
+  if (!film) {
+    return <Page404/>;
+  }
 
   return (
     <Fragment>
@@ -56,7 +76,7 @@ function FilmPage(props: FilmPageProps): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <FilmList films={recommendedFilms} showGenres={false}/>
+          <FilmList films={recommendedFilms.filter((item) => item.id !== film.id)} showGenres={false}/>
         </section>
 
         <Footer/>

@@ -1,5 +1,4 @@
 enum AppRoutes {
-  Root = '/',
   Login = 'login',
   MyList = 'mylist',
   FilmsRoot = 'films/',
