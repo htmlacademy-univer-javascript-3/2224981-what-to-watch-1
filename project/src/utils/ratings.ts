@@ -1,16 +1,16 @@
 export function ratingToString(rating: number): string {
-  if (rating >= 2) {
-    if (rating >= 4) {
-      if (rating >= 6) {
-        if (rating >= 8) {
-          return 'Very good';
+  if (rating >= 3) {
+    if (rating >= 5) {
+      if (rating >= 8) {
+        if (rating === 10) {
+          return 'Awesome';
         }
-        return 'Good';
+        return 'Very good';
       }
-      return 'Ok';
+      return 'Good';
     }
-    return 'Bad';
+    return 'Normal';
   }
 
-  return 'Very bad';
+  return 'Bad';
 }
