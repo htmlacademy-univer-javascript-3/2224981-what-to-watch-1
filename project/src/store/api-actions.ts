@@ -51,11 +51,11 @@ export const getFullFilmInfo = createAsyncThunk<void, number, {
   extra: AxiosInstance
 }>('films/getFilms',
   async (arg, {dispatch, extra: api}) => {
-    dispatch(setAppStatus(AppStatus.Loading));
+    //dispatch(setAppStatus(AppStatus.Loading));
     dispatch(getFilmById(arg));
     dispatch(getFilmReviews(arg));
     dispatch(getFilmsByGenreAction(arg));
-    dispatch(setAppStatus(AppStatus.Ok));
+    //dispatch(setAppStatus(AppStatus.Ok));
   }
 );
 
