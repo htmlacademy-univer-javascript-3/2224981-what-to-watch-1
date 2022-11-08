@@ -1,7 +1,7 @@
 import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
 import {getToken} from './token';
-import {setError} from '../store/action';
-import {useAppDispatch} from '../hooks/store-hooks';
+import {setError} from '../store/slices/app-slice';
+import {store} from '../store';
 
 const BACKEND_URL = 'https://10.react.pages.academy/wtw';
 const TIMEOUT = 5000;
@@ -31,8 +31,7 @@ export const createApi = () => {
     (res: AxiosResponse) => res,
     (error:AxiosError<{error: string}>) => {
       if (error.response) {
-        const dispatch = useAppDispatch();
-        dispatch(setError(error.response.data.error));
+        store.dispatch(setError(error.response.data.error));
       }
     }
   );

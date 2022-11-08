@@ -1,9 +1,8 @@
-import {FormEvent, useRef, useState} from 'react';
-import {AppState} from '../../types/app-state';
+import {FormEvent, useEffect, useRef, useState} from 'react';
 import {loginAction} from '../../store/api-actions';
 import {INVALID_EMAIL_ERROR, INVALID_PASSWORD} from '../../const/login-errors';
 import {useAppDispatch, useAppSelector} from '../../hooks/store-hooks';
-import {setError} from '../../store/action';
+import {setError} from '../../store/slices/app-slice';
 import {useNavigate} from 'react-router-dom';
 import AuthStatus from '../../const/auth-status';
 
@@ -12,11 +11,24 @@ export function LoginForm() {
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const [formError, setFormError] = useState('');
-  const globalError = useAppSelector((state: AppState) => state.error);
-  const status = useAppSelector((state: AppState) => state.auth);
+  const globalError = useAppSelector((state) => state.appSlice.error);
+  const status = useAppSelector((state) => state.userSlice.auth);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    let mounted = true;
+
+    if (mounted) {
+      dispatch(setError(''));
+    }
+
+    return () => {
+      mounted = false;
+    };
+  }, [dispatch]);
+
 
   const checkEmail = () => {
     if (!emailRef.current?.validity.valid) {
