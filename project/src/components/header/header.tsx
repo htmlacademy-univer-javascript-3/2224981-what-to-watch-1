@@ -1,10 +1,10 @@
 import {PropsWithChildren} from 'react';
-import {useSelector} from 'react-redux';
-import {AppState, dispatch} from '../../types/app-state';
+import {dispatch} from '../../store';
 import AuthStatus from '../../const/auth-status';
 import {Link} from 'react-router-dom';
 import AppRoutes from '../../const/app-routes';
 import {logoutAction} from '../../store/api-actions';
+import {useAppSelector} from '../../hooks/store-hooks';
 
 export enum HeaderClass {
   FilmCard = 'film-card__head',
@@ -18,7 +18,7 @@ type HeaderProps = {
 } & PropsWithChildren;
 
 function Header(props: HeaderProps) {
-  const status = useSelector((state: AppState) => state.auth);
+  const status = useAppSelector((state) => state.userSlice.auth);
 
   const onSignOut = () => {
     dispatch(logoutAction())

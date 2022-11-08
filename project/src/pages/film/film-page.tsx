@@ -7,15 +7,15 @@ import Header, {HeaderClass} from '../../components/header/header';
 import {Footer} from '../../components/footer/footer';
 import {useAppSelector} from '../../hooks/store-hooks';
 import {getFullFilmInfo} from '../../store/api-actions';
-import {setComments, setFilm, setFilmsByGenre} from '../../store/action';
+import {setComments, setFilm, setFilmsByGenre} from '../../store/slices/film-slice';
 import Spinner from '../../components/spinner/spinner';
-import {dispatch} from '../../types/app-state';
+import {dispatch} from '../../store';
 import Page404 from '../../components/page-404/page-404';
 
 function FilmPage(): JSX.Element {
   const id = Number(useParams().id);
-  const film = useAppSelector((state) => state.film);
-  const recommendedFilms = useAppSelector((state) => state.oneGenreFilms);
+  const film = useAppSelector((state) => state.filmsSlice.film);
+  const recommendedFilms = useAppSelector((state) => state.filmsSlice.oneGenreFilms);
 
   const [loading, setLoading] = useState(true);
 

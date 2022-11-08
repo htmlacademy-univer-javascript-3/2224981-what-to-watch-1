@@ -9,7 +9,7 @@ type FilmHeaderProps = {
 }
 
 function FilmHeader({film}: FilmHeaderProps) {
-  const auth = useAppSelector((state) => state.auth);
+  const auth = useAppSelector((state) => state.userSlice.auth);
 
   return (
     <div className="film-card__wrap">

@@ -3,18 +3,18 @@ import AppRoutes from '../../const/app-routes';
 import ReviewCommentForm from '../../components/review-comment-form/review-comment-form';
 import Header, {HeaderClass} from '../../components/header/header';
 import {useEffect, useState} from 'react';
-import {useAppSelector} from '../../hooks/store-hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks/store-hooks';
 import Spinner from '../../components/spinner/spinner';
-import {dispatch} from '../../types/app-state';
 import {getFilmById} from '../../store/api-actions';
 import Page404 from '../../components/page-404/page-404';
-import {setFilm} from '../../store/action';
+import {setFilm} from '../../store/slices/film-slice';
 
 function ReviewPage(): JSX.Element {
   const id = Number(useParams().id);
-  const film = useAppSelector((state) => state.film);
+  const film = useAppSelector((state) => state.filmsSlice.film);
 
   const [loading, setLoading] = useState(true);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     let mounted = true;

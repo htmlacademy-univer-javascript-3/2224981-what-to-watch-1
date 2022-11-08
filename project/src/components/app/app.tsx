@@ -10,15 +10,15 @@ import PlayerPage from '../../pages/player/player-page';
 import Page404 from '../page-404/page-404';
 import ReviewPage from '../../pages/review/review-page';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
-import {AppState} from '../../types/app-state';
 
-import {useSelector} from 'react-redux';
 import {AppStatus} from '../../types/app-status';
 import Spinner from '../spinner/spinner';
 import {filmMocks} from '../../mocks/films';
+import {useAppSelector} from '../../hooks/store-hooks';
 
 function App(): JSX.Element {
-  const {auth, status} = useSelector((state: AppState) => state);
+  const status = useAppSelector((state) => state.appSlice.status);
+  const auth = useAppSelector((state) => state.userSlice.auth);
 
   if (auth === AuthStatus.Unknown || status === AppStatus.Loading) {
     return (

@@ -2,7 +2,7 @@ import ReadyReview from '../../ready-review/ready-review';
 import {useAppSelector} from '../../../hooks/store-hooks';
 
 function ReviewsTab() {
-  const comments = useAppSelector((state) => state.comments);
+  const comments = useAppSelector((state) => state.filmsSlice.comments);
 
   if (!comments) {
     return (<div>{null}</div>);
