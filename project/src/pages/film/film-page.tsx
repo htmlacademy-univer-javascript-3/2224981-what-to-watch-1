@@ -1,30 +1,30 @@
-import {Fragment, useLayoutEffect} from 'react';
+import {Fragment, useEffect, useState} from 'react';
 import FilmList from '../../components/film-list/film-list';
 import {useParams} from 'react-router-dom';
 import FilmHeader from '../../components/film-header/film-header';
-import Page404 from '../../components/page-404/page-404';
 import TabManager from '../../components/film-tabs/tab-manager/tab-manager';
 import Header, {HeaderClass} from '../../components/header/header';
 import {Footer} from '../../components/footer/footer';
-import {useAppDispatch, useAppSelector} from '../../hooks/store-hooks';
-import {AppStatus} from '../../types/app-status';
+import {useAppSelector} from '../../hooks/store-hooks';
 import {getFullFilmInfo} from '../../store/api-actions';
-import {setComments, setFilm, setFilmsByGenre} from '../../store/action';
+import {setComments, setFilm, setFilmsByGenre} from '../../store/slices/film-slice';
+import Spinner from '../../components/spinner/spinner';
+import {dispatch} from '../../store';
+import Page404 from '../../components/page-404/page-404';
 
 function FilmPage(): JSX.Element {
   const id = Number(useParams().id);
-  const film = useAppSelector((state) => state.film);
-  const recommendedFilms = useAppSelector((state) => state.oneGenreFilms);
+  const film = useAppSelector((state) => state.filmsSlice.film);
+  const recommendedFilms = useAppSelector((state) => state.filmsSlice.oneGenreFilms);
 
-  const status = useAppSelector((state) => state.status);
+  const [loading, setLoading] = useState(true);
 
-  const dispatch = useAppDispatch();
-
-  useLayoutEffect(() => {
+  useEffect(() => {
     let mounted = true;
 
     if (mounted) {
-      dispatch(getFullFilmInfo(id));
+      dispatch(getFullFilmInfo(id))
+        .then(() => {setLoading(false);});
     }
 
     return () => {
@@ -35,8 +35,8 @@ function FilmPage(): JSX.Element {
     };
   }, [id]);
 
-  if (status === AppStatus.Loading) {
-    return (<div>{null}</div>);
+  if (loading) {
+    return <Spinner/>;
   }
 
   if (!film) {

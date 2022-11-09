@@ -1,12 +1,12 @@
 import {configureStore} from '@reduxjs/toolkit';
-import {reducer} from './reducer';
 import {createApi} from '../services/api';
 import {redirect} from './middlewares/redirect';
+import {rootReducer} from './reducer';
 
 export const api = createApi();
 
 export const store = configureStore({
-  reducer: reducer,
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       thunk: {
@@ -14,3 +14,7 @@ export const store = configureStore({
       }
     }).concat(redirect)
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+export const dispatch: AppDispatch = store.dispatch;

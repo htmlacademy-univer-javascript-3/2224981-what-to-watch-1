@@ -1,7 +1,7 @@
 enum AuthStatus {
-  Auth,
-  NoAuth,
-  Unknown
+  Auth = 'Auth',
+  NoAuth = 'NoAuth',
+  Unknown = 'Unknown'
 }
 
 export default AuthStatus;

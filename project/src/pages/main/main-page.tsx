@@ -1,11 +1,10 @@
 import FilmList from '../../components/film-list/film-list';
 import Header, {HeaderClass} from '../../components/header/header';
-import {useSelector} from 'react-redux';
-import {AppState} from '../../types/app-state';
 import {Footer} from '../../components/footer/footer';
+import {useAppSelector} from '../../hooks/store-hooks';
 
 function MainPage(): JSX.Element {
-  const films = useSelector((state: AppState) => state.films);
+  const films = useAppSelector((state) => state.filmsSlice.films);
   const filmPromo = films[0];
 
   if (!filmPromo) {
