@@ -1,6 +1,6 @@
 import FilmInfo from '../../types/film-info';
 import FilmCard from '../film-card/film-card';
-import {Fragment, useState} from 'react';
+import {Fragment, useEffect, useState} from 'react';
 import CategoryTabs from '../category-tabs/category-tabs';
 import {toGenreDict} from '../../utils/film-manager';
 import {ALL_GENRES_KEY, NEXT_LOADING_CARDS_AMOUNT} from '../../const/simple-const';
@@ -18,6 +18,11 @@ function FilmList(props: FilmListProps) {
 
   const genreDict = toGenreDict(props.films);
   const tabs = Object.keys(genreDict);
+
+  useEffect(() => {
+    setGenreFilms(props.films);
+  }, [props.films]);
+
 
   const changeTab = (tab: string) => {
     if (tab === ALL_GENRES_KEY) {

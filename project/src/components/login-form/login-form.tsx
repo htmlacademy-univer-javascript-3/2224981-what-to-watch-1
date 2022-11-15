@@ -62,7 +62,7 @@ export function LoginForm() {
 
   if (status === AuthStatus.Auth) {
     dispatch(setError(''));
-    navigate('/');
+    navigate(-1);
   }
 
   return (

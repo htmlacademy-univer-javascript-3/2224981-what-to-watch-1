@@ -13,7 +13,6 @@ import ScrollToTop from '../scroll-to-top/scroll-to-top';
 
 import {AppStatus} from '../../types/app-status';
 import Spinner from '../spinner/spinner';
-import {filmMocks} from '../../mocks/films';
 import {useAppSelector} from '../../hooks/store-hooks';
 
 function App(): JSX.Element {
@@ -34,8 +33,8 @@ function App(): JSX.Element {
           <Route index element={<MainPage/>}/>
           <Route path={AppRoutes.Login} element={<LoginPage/>}/>
           <Route path={AppRoutes.MyList} element={
-            <PrivateRoute status={AuthStatus.NoAuth}>
-              <MyListPage films={filmMocks}/>
+            <PrivateRoute requiredStatus={AuthStatus.Auth}>
+              <MyListPage/>
             </PrivateRoute>
           }
           />
@@ -44,7 +43,7 @@ function App(): JSX.Element {
             <Route path={AppRoutes.FilmsReview} element={<ReviewPage/>}/>
           </Route>
           <Route path={`${AppRoutes.PlayerRoot}:id`}>
-            <Route index element={<PlayerPage film={filmMocks[2]}/>}/>
+            <Route index element={<PlayerPage/>}/>
           </Route>
         </Route>
         <Route path='*' element={<Page404/>}/>
