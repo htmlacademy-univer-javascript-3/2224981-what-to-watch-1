@@ -1,7 +1,7 @@
 import FilmInfo from '../../types/film-info';
 import {Link} from 'react-router-dom';
 import AppRoutes from '../../const/app-routes';
-import VideoPlayer from '../video-player/video-player';
+import MiniVideoPlayer from '../mini-video-player/mini-video-player';
 import {useState} from 'react';
 
 type FilmCardProps = {
@@ -34,7 +34,7 @@ function FilmCard(props: FilmCardProps): JSX.Element {
       <div className="small-film-card__image">
         {
           showPreview
-            ? <VideoPlayer previewImage={props.filmInfo.previewImage} videoLink={props.filmInfo.videoLink} playSound={false} width={280} height={175} delayMs={1000}/>
+            ? <MiniVideoPlayer previewImage={props.filmInfo.previewImage} videoLink={props.filmInfo.videoLink} playSound={false} width={280} height={175} delayMs={1000}/>
             : <img src={props.filmInfo.previewImage} width="280" height="175" />
         }
       </div>

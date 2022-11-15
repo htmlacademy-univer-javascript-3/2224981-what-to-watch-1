@@ -5,11 +5,10 @@ import FilmHeader from '../../components/film-header/film-header';
 import TabManager from '../../components/film-tabs/tab-manager/tab-manager';
 import Header, {HeaderClass} from '../../components/header/header';
 import {Footer} from '../../components/footer/footer';
-import {useAppSelector} from '../../hooks/store-hooks';
-import {getFullFilmInfo} from '../../store/api-actions';
+import {useAppDispatch, useAppSelector} from '../../hooks/store-hooks';
+import {getFavorite, getFullFilmInfo} from '../../store/api-actions';
 import {setComments, setFilm, setFilmsByGenre} from '../../store/slices/film-slice';
 import Spinner from '../../components/spinner/spinner';
-import {dispatch} from '../../store';
 import Page404 from '../../components/page-404/page-404';
 
 function FilmPage(): JSX.Element {
@@ -17,6 +16,9 @@ function FilmPage(): JSX.Element {
   const film = useAppSelector((state) => state.filmsSlice.film);
   const recommendedFilms = useAppSelector((state) => state.filmsSlice.oneGenreFilms);
 
+  const favorites = useAppSelector((state) => state.filmsSlice.favorites);
+
+  const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,6 +26,7 @@ function FilmPage(): JSX.Element {
 
     if (mounted) {
       dispatch(getFullFilmInfo(id))
+        .then(() => dispatch(getFavorite()))
         .then(() => {setLoading(false);});
     }
 
@@ -33,7 +36,7 @@ function FilmPage(): JSX.Element {
       dispatch(setFilmsByGenre([]));
       dispatch(setComments([]));
     };
-  }, [id]);
+  }, [dispatch, id]);
 
   if (loading) {
     return <Spinner/>;
@@ -56,7 +59,9 @@ function FilmPage(): JSX.Element {
 
           <Header showAvatar headerClass={HeaderClass.FilmCard}/>
 
-          <FilmHeader film={film}/>
+          <div className="film-card__wrap">
+            <FilmHeader favorites={favorites} film={film}/>
+          </div>
         </div>
 
         <div className="film-card__wrap film-card__translate-top">
