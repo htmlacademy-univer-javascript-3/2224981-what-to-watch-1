@@ -7,7 +7,8 @@ export type FilmState = {
   oneGenreFilms: FilmInfo[],
   films: FilmInfo[],
   film: FilmInfo | null,
-  comments: Comment[]
+  comments: Comment[],
+  favorites: FilmInfo[]
 }
 
 const initState: FilmState = {
@@ -15,7 +16,8 @@ const initState: FilmState = {
   oneGenreFilms: [],
   films: [],
   film: null,
-  comments: []
+  comments: [],
+  favorites: []
 };
 
 const filmSlice = createSlice({
@@ -36,9 +38,12 @@ const filmSlice = createSlice({
     },
     setComments(state, action) {
       state.comments = action.payload;
+    },
+    setFavorites(state, action) {
+      state.favorites = action.payload;
     }
   }
 });
 
-export const {selectGenre, setFilmsByGenre, fillAllFilms, setFilm, setComments} = filmSlice.actions;
+export const {selectGenre, setFilmsByGenre, fillAllFilms, setFilm, setComments, setFavorites} = filmSlice.actions;
 export default filmSlice.reducer;

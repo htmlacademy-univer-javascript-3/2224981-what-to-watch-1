@@ -3,5 +3,6 @@ export enum ApiRoutes {
   Logout = '/logout',
   Films = '/films',
   Similar = '/similar',
-  Comments = '/comments'
+  Comments = '/comments',
+  Favorite = '/favorite'
 }

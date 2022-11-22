@@ -1,43 +1,45 @@
-import FilmInfo from '../../types/film-info';
+import {VideoPlayer} from '../../components/video-player/video-player';
+import {useAppDispatch, useAppSelector} from '../../hooks/store-hooks';
+import Page404 from '../../components/page-404/page-404';
+import {useEffect, useState} from 'react';
+import Spinner from '../../components/spinner/spinner';
+import {setFilm} from '../../store/slices/film-slice';
+import {getFilmById} from '../../store/api-actions';
+import {useParams} from 'react-router-dom';
 
-type PlayerPageProps = {
-  film: FilmInfo;
-}
+function PlayerPage(): JSX.Element {
+  const id = Number(useParams().id);
+  const film = useAppSelector((state) => state.filmsSlice.film);
 
-function PlayerPage(props: PlayerPageProps): JSX.Element {
+  const [loading, setLoading] = useState(true);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    let mounted = true;
+
+    if (mounted) {
+      dispatch(getFilmById(id))
+        .then(() => {setLoading(false);});
+    }
+
+    return () => {
+      mounted = false;
+      dispatch(setFilm(null));
+    };
+  }, [id, dispatch]);
+
+
+  if (loading) {
+    return <Spinner/>;
+  }
+
+  if (!film) {
+    return <Page404/>;
+  }
+
   return (
-    <div className="player">
-      <video src="#" className="player__video" poster={props.film.previewImage}></video>
-
-      <button type="button" className="player__exit">Exit</button>
-
-      <div className="player__controls">
-        <div className="player__controls-row">
-          <div className="player__time">
-            <progress className="player__progress" value="30" max="100"></progress>
-            <div className="player__toggler" style={{left: '30%'}}>Toggler</div>
-          </div>
-          <div className="player__time-value">1:30:29</div>
-        </div>
-
-        <div className="player__controls-row">
-          <button type="button" className="player__play">
-            <svg viewBox="0 0 19 19" width="19" height="19">
-              <use xlinkHref="#play-s"></use>
-            </svg>
-            <span>Play</span>
-          </button>
-          <div className="player__name">Transpotting</div>
-
-          <button type="button" className="player__full-screen">
-            <svg viewBox="0 0 27 27" width="27" height="27">
-              <use xlinkHref="#full-screen"></use>
-            </svg>
-            <span>Full screen</span>
-          </button>
-        </div>
-      </div>
-    </div>
+    <VideoPlayer film={film}/>
   );
 }
 
