@@ -15,3 +15,8 @@
 
     font-size: 3em;
 }
+
+.parent a {
+    color: #d9cd8c;
+    text-align: center;
+}

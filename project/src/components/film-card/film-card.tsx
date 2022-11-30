@@ -31,16 +31,15 @@ function FilmCard(props: FilmCardProps): JSX.Element {
 
   return (
     <article className="small-film-card catalog__films-card" onMouseEnter={onMouseEnterWrapper} onMouseLeave={onMouseLeaveWrapper}>
-      <div className="small-film-card__image">
-        {
-          showPreview
-            ? <MiniVideoPlayer previewImage={props.filmInfo.previewImage} videoLink={props.filmInfo.videoLink} playSound={false} width={280} height={175} delayMs={1000}/>
-            : <img src={props.filmInfo.previewImage} width="280" height="175" />
-        }
-      </div>
-      <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" to={`/${AppRoutes.FilmsRoot}${props.filmInfo.id}`}>{props.filmInfo.name}</Link>
-      </h3>
+      <Link className="small-film-card__link" to={`/${AppRoutes.FilmsRoot}${props.filmInfo.id}`}>
+        <div className="small-film-card__image">
+          {showPreview && <MiniVideoPlayer previewImage={props.filmInfo.previewImage} videoLink={props.filmInfo.videoLink} playSound={false} width={280} height={175} delayMs={1000}/>}
+          <img src={props.filmInfo.previewImage} width="280" height="175" />
+        </div>
+        <h3 className="small-film-card__title">
+          {props.filmInfo.name}
+        </h3>
+      </Link>
     </article>
   );
 }

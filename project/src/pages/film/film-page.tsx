@@ -6,8 +6,8 @@ import TabManager from '../../components/film-tabs/tab-manager/tab-manager';
 import Header, {HeaderClass} from '../../components/header/header';
 import {Footer} from '../../components/footer/footer';
 import {useAppDispatch, useAppSelector} from '../../hooks/store-hooks';
-import {getFavorite, getFullFilmInfo} from '../../store/api-actions';
-import {setComments, setFilm, setFilmsByGenre} from '../../store/slices/film-slice';
+import {getFullFilmInfo} from '../../store/api-actions';
+import {setComments, setFilm, setFilmsByGenre} from '../../store/slices/film-slice/film-slice';
 import Spinner from '../../components/spinner/spinner';
 import Page404 from '../../components/page-404/page-404';
 
@@ -15,8 +15,6 @@ function FilmPage(): JSX.Element {
   const id = Number(useParams().id);
   const film = useAppSelector((state) => state.filmsSlice.film);
   const recommendedFilms = useAppSelector((state) => state.filmsSlice.oneGenreFilms);
-
-  const favorites = useAppSelector((state) => state.filmsSlice.favorites);
 
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
@@ -26,7 +24,6 @@ function FilmPage(): JSX.Element {
 
     if (mounted) {
       dispatch(getFullFilmInfo(id))
-        .then(() => dispatch(getFavorite()))
         .then(() => {setLoading(false);});
     }
 
@@ -60,7 +57,7 @@ function FilmPage(): JSX.Element {
           <Header showAvatar headerClass={HeaderClass.FilmCard}/>
 
           <div className="film-card__wrap">
-            <FilmHeader favorites={favorites} film={film}/>
+            <FilmHeader film={film}/>
           </div>
         </div>
 

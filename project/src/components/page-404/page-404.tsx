@@ -1,5 +1,6 @@
 import './page-404.css';
 import Header, {HeaderClass} from '../header/header';
+import {Link} from 'react-router-dom';
 
 function Page404(): JSX.Element {
   return (
@@ -8,7 +9,12 @@ function Page404(): JSX.Element {
 
       <div className={'parent'}>
         <h1>404</h1>
-        <div>No found</div>
+        <div>Not found</div>
+        <div style={{marginTop: '80px'}}>
+          <Link to={'/'}>
+            Go to Main page
+          </Link>
+        </div>
       </div>
     </div>
   );

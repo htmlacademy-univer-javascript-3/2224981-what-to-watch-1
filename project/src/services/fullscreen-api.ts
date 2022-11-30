@@ -1,58 +1,42 @@
-/*
-const RequestFullScreenMethods = {
-  Standart: 'requestFullscreen',
-  Webkit: 'webkitRequestFullScreen',
-  Moz: 'mozRequestFullScreen',
-  Ms: 'msRequestFullscreen'
-} as const;
+import {IDocumentFullscreen, IElementFullScreen} from '../fullscreen-types';
 
-const ExitFullScreenMethods = {
-  Standart: 'exitFullscreen',
-  Webkit: 'webkitExitFullscreen',
-  Moz: 'mozCancelFullScreen',
-  Ms: 'msExitFullscreen'
-} as const;
+export interface CombinedElement extends HTMLElement, IElementFullScreen {}
+export interface CombinedDocument extends Document, IDocumentFullscreen {}
 
-const CheckFullScreenMethods = {
-  Standart: 'fullscreenElement',
-  Webkit: 'webkitFullscreenElement',
-  Moz: 'mozFullScreenElement',
-  Ms: 'msFullscreenElement'
-} as const;
-*/
-
-export function requestFullScreen(element: HTMLElement) {
+export function requestFullScreen(element: CombinedElement) {
   if (element.requestFullscreen) {
     element.requestFullscreen();
   }
-  /*
-  else if (element.webkitRequestFullScreen) {
+  else if (element.webkitRequestFullscreen) {
     element.webkitRequestFullscreen();
   } else if (element.mozRequestFullScreen) {
     element.mozRequestFullScreen();
   } else if (element.msRequestFullscreen) {
     element.msRequestFullscreen();
-  }*/
+  }
 }
 
 export function exitFullScreen() {
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
+  const doc = document as CombinedDocument;
+
+  if (doc.exitFullscreen) {
+    doc.exitFullscreen();
   }
-  /*
-  else if ('mozCancelFullScreen' in document) {
-    document['mozCancelFullScreen']();
-  } else if (document.webkitExitFullscreen) {
-    document.webkitExitFullscreen();
-  } else if (document.msExitFullscreen) {
-    document.msExitFullscreen();
-  }*/
+  else if (doc.mozCancelFullScreen) {
+    doc.mozCancelFullScreen();
+  } else if (doc.webkitExitFullscreen) {
+    doc.webkitExitFullscreen();
+  } else if (doc.msExitFullscreen) {
+    doc.msExitFullscreen();
+  }
 }
 
 export function checkFullScreen(){
-  return document.fullscreenElement; /*||
-    document.mozFullScreenElement ||
-    document.webkitFullscreenElement ||
-    document.webkitFullscreenElement ||
-    document.msFullscreenElement;*/
+  const doc = document as CombinedDocument;
+
+  return doc.fullscreenElement ||
+    doc.mozFullScreenElement ||
+    doc.webkitFullscreenElement ||
+    doc.webkitFullscreenElement ||
+    doc.msFullscreenElement;
 }
