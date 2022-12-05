@@ -1,5 +1,5 @@
-import FilmInfo from '../../types/film-info';
-import {Comment} from '../../types/comment';
+import FilmInfo from '../../../types/film-info';
+import {Comment} from '../../../types/comment';
 import {createSlice} from '@reduxjs/toolkit';
 
 export type FilmState = {
@@ -11,7 +11,7 @@ export type FilmState = {
   favorites: FilmInfo[]
 }
 
-const initState: FilmState = {
+export const initState: FilmState = {
   selectedGenre: 'all',
   oneGenreFilms: [],
   films: [],

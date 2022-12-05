@@ -8,8 +8,6 @@ function MainPage(): JSX.Element {
   const films = useAppSelector((state) => state.filmsSlice.films);
   const filmPromo = films[0];
 
-  const favorites = useAppSelector((state) => state.filmsSlice.favorites);
-
   if (!filmPromo) {
     return (
       <div>{null}</div>
@@ -33,7 +31,7 @@ function MainPage(): JSX.Element {
               <img src={filmPromo.posterImage} alt="The Grand Budapest Hotel poster" width="218" height="327" />
             </div>
 
-            <FilmHeader film={filmPromo} favorites={favorites}/>
+            <FilmHeader film={filmPromo}/>
           </div>
         </div>
       </section>

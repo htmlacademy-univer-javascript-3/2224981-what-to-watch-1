@@ -4,30 +4,14 @@ import FilmInfo from '../../types/film-info';
 import {useAppSelector} from '../../hooks/store-hooks';
 import AuthStatus from '../../const/auth-status';
 import {MyListButton} from '../my-list-button/my-list-button';
-import {useEffect, useState} from 'react';
 
 type FilmHeaderProps = {
-  film: FilmInfo,
-  favorites: FilmInfo[]
+  film: FilmInfo
 }
 
-function FilmHeader({film, favorites}: FilmHeaderProps) {
+function FilmHeader({film}: FilmHeaderProps) {
   const auth = useAppSelector((state) => state.userSlice.auth);
   const navigate = useNavigate();
-
-  const [favoritesState, setFavoritesState] = useState(favorites);
-
-  useEffect(() => {
-    let mounted = true;
-
-    if (mounted) {
-      setFavoritesState(favorites);
-    }
-
-    return () => {
-      mounted = false;
-    };
-  }, [favorites]);
 
   return (
     <div className="film-card__desc">
@@ -46,7 +30,7 @@ function FilmHeader({film, favorites}: FilmHeaderProps) {
           </svg>
           <span>Play</span>
         </button>
-        <MyListButton favoriteNumber={favoritesState.length} film={film}/>
+        <MyListButton film={film}/>
         {auth === AuthStatus.Auth && <Link to={AppRoutes.FilmsReview} className="btn film-card__button">Add review</Link>}
       </div>
     </div>

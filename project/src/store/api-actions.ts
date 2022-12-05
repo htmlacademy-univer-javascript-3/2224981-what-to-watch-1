@@ -4,7 +4,7 @@ import {AxiosInstance} from 'axios';
 import FilmInfo from '../types/film-info';
 import {
   setAppStatus,
-} from './slices/app-slice';
+} from './slices/app-slice/app-slice';
 
 import {dropToken, saveToken} from '../services/token';
 import {AuthData} from '../types/auth-data';
@@ -12,8 +12,7 @@ import {UserData} from '../types/user-data';
 import {AppStatus} from '../types/app-status';
 import {Comment} from '../types/comment';
 import {AppDispatch, RootState} from './index';
-import {fillAllFilms, setComments, setFavorites, setFilm, setFilmsByGenre} from './slices/film-slice';
-import {redirectToRoute} from './actions';
+import {fillAllFilms, setComments, setFavorites, setFilm, setFilmsByGenre} from './slices/film-slice/film-slice';
 
 export const fetchGetFilmsAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch,
@@ -37,7 +36,6 @@ export const sendComment = createAsyncThunk<void, {filmId: number, comment: stri
     dispatch(setAppStatus(AppStatus.Loading));
     const data = {comment: arg.comment, rating: arg.rating};
     await api.post<Comment>(`${ApiRoutes.Comments}/${arg.filmId}`, data);
-    dispatch(redirectToRoute(`${ApiRoutes.Films}/${arg.filmId}`));
     dispatch(setAppStatus(AppStatus.Ok));
   });
 
@@ -126,15 +124,28 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   },
 );
 
-export const loginAction = createAsyncThunk<void, AuthData, {
+export const getUserData = createAsyncThunk<UserData, undefined, {
+  dispatch: AppDispatch,
+  state: RootState,
+  extra: AxiosInstance
+}>(
+  'users/getUser',
+  async (_, {dispatch, extra: api}) => {
+    const res = await api.get(ApiRoutes.Login);
+    return res.data;
+  }
+);
+
+export const loginAction = createAsyncThunk<UserData, AuthData, {
   dispatch: AppDispatch,
   state: RootState,
   extra: AxiosInstance
 }>(
   'user/login',
   async ({email, password}, {dispatch, extra: api}) => {
-    const {data: {token}} = await api.post<UserData>(ApiRoutes.Login, {email, password});
-    saveToken(token);
+    const {data} = await api.post<UserData>(ApiRoutes.Login, {email, password});
+    saveToken(data.token);
+    return data;
   },
 );
 

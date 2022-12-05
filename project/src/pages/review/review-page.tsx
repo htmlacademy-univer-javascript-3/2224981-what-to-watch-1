@@ -6,7 +6,7 @@ import {useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks/store-hooks';
 import Spinner from '../../components/spinner/spinner';
 import Page404 from '../../components/page-404/page-404';
-import {setFilm} from '../../store/slices/film-slice';
+import {setFilm} from '../../store/slices/film-slice/film-slice';
 import {getFilmById} from '../../store/api-actions';
 
 function ReviewPage(): JSX.Element {

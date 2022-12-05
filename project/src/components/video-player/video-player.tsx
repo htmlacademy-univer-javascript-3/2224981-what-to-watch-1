@@ -2,7 +2,7 @@ import FilmInfo from '../../types/film-info';
 import {SyntheticEvent, useEffect, useRef, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {formatFilmLeftTime} from '../../utils/time-format';
-import {checkFullScreen, exitFullScreen, requestFullScreen} from '../../services/fullscreen-api';
+import {checkFullScreen, CombinedElement, exitFullScreen, requestFullScreen} from '../../services/fullscreen-api';
 
 type VideoPlayerProps = {
   film: FilmInfo
@@ -30,7 +30,7 @@ export function VideoPlayer(props: VideoPlayerProps) {
       exitFullScreen();
     } else {
       if (parentRef?.current) {
-        requestFullScreen(parentRef?.current);
+        requestFullScreen(parentRef?.current as unknown as CombinedElement);
       }
     }
   };
