@@ -1,4 +1,4 @@
-import {AppStatus} from '../../types/app-status';
+import {AppStatus} from '../../../types/app-status';
 import {createSlice} from '@reduxjs/toolkit';
 
 export type AppState = {
@@ -6,7 +6,7 @@ export type AppState = {
   error: string | null
 };
 
-const initState: AppState = {
+export const initState: AppState = {
   status: AppStatus.Ok,
   error: null
 };

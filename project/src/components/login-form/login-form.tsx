@@ -2,7 +2,7 @@ import {FormEvent, useEffect, useRef, useState} from 'react';
 import {loginAction} from '../../store/api-actions';
 import {INVALID_EMAIL_ERROR, INVALID_PASSWORD} from '../../const/login-errors';
 import {useAppDispatch, useAppSelector} from '../../hooks/store-hooks';
-import {setError} from '../../store/slices/app-slice';
+import {setError} from '../../store/slices/app-slice/app-slice';
 import {useNavigate} from 'react-router-dom';
 import AuthStatus from '../../const/auth-status';
 
@@ -20,6 +20,11 @@ export function LoginForm() {
   useEffect(() => {
     let mounted = true;
 
+    if (status === AuthStatus.Auth) {
+      dispatch(setError(''));
+      navigate(-1);
+    }
+
     if (mounted) {
       dispatch(setError(''));
     }
@@ -27,7 +32,7 @@ export function LoginForm() {
     return () => {
       mounted = false;
     };
-  }, [dispatch]);
+  }, [dispatch, status]);
 
 
   const checkEmail = () => {
@@ -39,7 +44,8 @@ export function LoginForm() {
   };
 
   const checkPassword = () => {
-    if (passwordRef.current?.validity.patternMismatch) {
+    if (passwordRef.current?.validity.patternMismatch ||
+    !passwordRef.current?.value) {
       setFormError(INVALID_PASSWORD);
       return false;
     }
@@ -59,11 +65,6 @@ export function LoginForm() {
       }
     }
   };
-
-  if (status === AuthStatus.Auth) {
-    dispatch(setError(''));
-    navigate(-1);
-  }
 
   return (
     <form action="#" className="sign-in__form" onSubmit={handleSubmit}>

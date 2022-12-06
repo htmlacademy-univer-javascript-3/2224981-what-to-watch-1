@@ -1,13 +1,16 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {checkAuthAction, loginAction, logoutAction} from '../api-actions';
-import AuthStatus from '../../const/auth-status';
+import {checkAuthAction, getUserData, loginAction, logoutAction} from '../../api-actions';
+import AuthStatus from '../../../const/auth-status';
+import {UserData} from '../../../types/user-data';
 
 export type UserState = {
-  auth: AuthStatus
+  auth: AuthStatus,
+  user: UserData | null
 };
 
-const initialState: UserState = {
-  auth: AuthStatus.Unknown
+export const initialState: UserState = {
+  auth: AuthStatus.Unknown,
+  user: null
 };
 
 export const userSlice = createSlice({
@@ -22,14 +25,18 @@ export const userSlice = createSlice({
       .addCase(checkAuthAction.rejected, (state, action) => {
         state.auth = AuthStatus.NoAuth;
       })
-      .addCase(loginAction.fulfilled, (state) => {
+      .addCase(loginAction.fulfilled, (state, action) => {
         state.auth = AuthStatus.Auth;
+        state.user = action.payload;
       })
       .addCase(loginAction.rejected, (state) => {
         state.auth = AuthStatus.NoAuth;
       })
       .addCase(logoutAction.fulfilled, (state, action) => {
         state.auth = AuthStatus.NoAuth;
+      })
+      .addCase(getUserData.fulfilled, (state, action) => {
+        state.user = action.payload;
       });
   }
 });

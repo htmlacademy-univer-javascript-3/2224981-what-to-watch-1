@@ -19,6 +19,7 @@ type HeaderProps = {
 
 function Header(props: HeaderProps) {
   const status = useAppSelector((state) => state.userSlice.auth);
+  const user = useAppSelector((state) => state.userSlice.user);
 
   const onSignOut = () => {
     dispatch(logoutAction())
@@ -44,7 +45,9 @@ function Header(props: HeaderProps) {
               status === AuthStatus.Auth && (
                 <li className="user-block__item">
                   <div className="user-block__avatar">
-                    <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
+                    <Link to={`/${AppRoutes.MyList}`}>
+                      <img src={user?.avatarUrl || ''} alt="User avatar" width="63" height="63"/>
+                    </Link>
                   </div>
                 </li>
               )

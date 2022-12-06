@@ -1,6 +1,6 @@
 import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
 import {getToken} from './token';
-import {setError} from '../store/slices/app-slice';
+import {setError} from '../store/slices/app-slice/app-slice';
 import {store} from '../store';
 
 const BACKEND_URL = 'https://10.react.pages.academy/wtw';
