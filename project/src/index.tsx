@@ -4,7 +4,7 @@ import App from './components/app/app';
 
 import {Provider} from 'react-redux';
 import {store} from './store';
-import {checkAuthAction, fetchGetFilmsAction} from './store/api-actions';
+import {checkAuthAction, fetchGetFilmsAction} from './store/api-actions/api-actions';
 import {dispatch} from './store';
 
 dispatch(fetchGetFilmsAction());

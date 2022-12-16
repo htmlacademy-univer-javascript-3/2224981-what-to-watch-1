@@ -6,14 +6,14 @@ export type AppState = {
   error: string | null
 };
 
-export const initState: AppState = {
+export const INIT_STATE: AppState = {
   status: AppStatus.Ok,
   error: null
 };
 
 const appSlice = createSlice({
   name: 'appSlice',
-  initialState: initState,
+  initialState: INIT_STATE,
   reducers: {
     setError(state, action) {
       state.error = action.payload;

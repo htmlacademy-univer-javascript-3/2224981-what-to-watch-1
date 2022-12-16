@@ -15,17 +15,18 @@ export function formatLeadZeros(num: number, maxLength: number) {
 }
 
 export function formatFilmLeftTime(filmDurationMin: number, currentPosSec: number) {
-  const z = (n: number) => formatLeadZeros(n ,2);
+  const formatZeros = (n: number) => formatLeadZeros(n ,2);
   const floor = Math.floor;
 
   const durSec = filmDurationMin * 60;
-  const leftSec = durSec - floor(currentPosSec);
+  const leftSec = floor(durSec - currentPosSec);
 
   const h = floor(leftSec / 3600);
   const m = floor(leftSec / 60) - h * 60;
   const s = leftSec - m * 60 - h * 3600;
 
   if (h > 0) {
-    return `-${z(h)}:${z(m)}:${z(s)}`;
+    return `-${formatZeros(h)}:${formatZeros(m)}:${formatZeros(s)}`;
   }
+  return `-${formatZeros(m)}:${formatZeros(s)}`;
 }

@@ -2,7 +2,7 @@ import {ChangeEvent, useEffect, useState} from 'react';
 import FilmInfo from '../../types/film-info';
 import Page404 from '../page-404/page-404';
 import {useAppDispatch, useAppSelector} from '../../hooks/store-hooks';
-import {sendComment} from '../../store/api-actions';
+import {sendComment} from '../../store/api-actions/api-actions';
 import {redirectToRoute} from '../../store/actions';
 import {ApiRoutes} from '../../const/api-routes';
 
@@ -106,8 +106,8 @@ function ReviewCommentForm(props: ReviewCommentFormProps): JSX.Element {
             minLength={COMMENT_BORDERS[0]}
             maxLength={COMMENT_BORDERS[1]}
             required
+            value={formData.comment}
           >
-            {formData.comment}
           </textarea>
           <div className="add-review__submit">
             <button className="add-review__btn" type="submit" disabled={submitDisabled}>Post</button>

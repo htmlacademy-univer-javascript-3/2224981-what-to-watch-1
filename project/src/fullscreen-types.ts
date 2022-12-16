@@ -3,7 +3,6 @@ export interface IDocumentFullscreen {
   mozCancelFullScreen: () => Promise<void>;
   webkitExitFullscreen: () => Promise<void>;
   msExitFullscreen: () => Promise<void>;
-  //fullscreenElement: Element | null;
   mozFullScreenElement: Element | null;
   webkitFullscreenElement: Element | null;
   msFullscreenElement: Element | null;

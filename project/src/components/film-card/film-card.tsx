@@ -34,7 +34,7 @@ function FilmCard(props: FilmCardProps): JSX.Element {
       <Link className="small-film-card__link" to={`/${AppRoutes.FilmsRoot}${props.filmInfo.id}`}>
         <div className="small-film-card__image">
           {showPreview && <MiniVideoPlayer previewImage={props.filmInfo.previewImage} videoLink={props.filmInfo.videoLink} playSound={false} width={280} height={175} delayMs={1000}/>}
-          <img src={props.filmInfo.previewImage} width="280" height="175" />
+          <img src={props.filmInfo.previewImage} width="280" height="175" alt={props.filmInfo.name}/>
         </div>
         <h3 className="small-film-card__title">
           {props.filmInfo.name}

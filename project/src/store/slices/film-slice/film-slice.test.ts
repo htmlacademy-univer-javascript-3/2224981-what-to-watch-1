@@ -1,7 +1,7 @@
 import {
   fillAllFilms,
   FilmState,
-  initState,
+  INIT_STATE,
   selectGenre,
   setComments,
   setFavorites,
@@ -101,7 +101,7 @@ describe('Reducer: film-slice', () => {
   let state: FilmState;
 
   beforeEach(() => {
-    state = initState;
+    state = INIT_STATE;
   });
 
   it('sets selected genre', () => {

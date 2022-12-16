@@ -4,7 +4,7 @@ import Page404 from '../../components/page-404/page-404';
 import {useEffect, useState} from 'react';
 import Spinner from '../../components/spinner/spinner';
 import {setFilm} from '../../store/slices/film-slice/film-slice';
-import {getFilmById} from '../../store/api-actions';
+import {getFilmById} from '../../store/api-actions/api-actions';
 import {useParams} from 'react-router-dom';
 
 function PlayerPage(): JSX.Element {

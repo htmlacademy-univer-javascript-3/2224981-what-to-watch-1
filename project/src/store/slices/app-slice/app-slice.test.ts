@@ -1,4 +1,4 @@
-import {AppState, initState, setAppStatus, setError} from './app-slice';
+import {AppState, INIT_STATE, setAppStatus, setError} from './app-slice';
 import reducer from './app-slice';
 import {AppStatus} from '../../../types/app-status';
 
@@ -6,7 +6,7 @@ describe('Reducer: app-slice', () => {
   let state: AppState;
 
   beforeEach(() => {
-    state = initState;
+    state = INIT_STATE;
   });
 
   it('sets error', () => {

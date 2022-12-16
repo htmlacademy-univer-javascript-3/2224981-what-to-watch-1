@@ -1,11 +1,11 @@
 import FilmInfo from '../../../types/film-info';
 import {formatTime} from '../../../utils/time-format';
 
-type DetailsTab = {
+type DetailsTabProps = {
   film: FilmInfo;
 }
 
-function DetailsTab({film}: DetailsTab) {
+function DetailsTab({film}: DetailsTabProps) {
   return (
     <div className="film-card__text film-card__row">
       <div className="film-card__text-col">

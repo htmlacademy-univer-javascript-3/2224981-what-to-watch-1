@@ -7,7 +7,7 @@ import {useAppDispatch, useAppSelector} from '../../hooks/store-hooks';
 import Spinner from '../../components/spinner/spinner';
 import Page404 from '../../components/page-404/page-404';
 import {setFilm} from '../../store/slices/film-slice/film-slice';
-import {getFilmById} from '../../store/api-actions';
+import {getFilmById} from '../../store/api-actions/api-actions';
 
 function ReviewPage(): JSX.Element {
   const id = Number(useParams().id);
@@ -42,7 +42,7 @@ function ReviewPage(): JSX.Element {
     <section className="film-card film-card--full">
       <div className="film-card__header">
         <div className="film-card__bg">
-          <img src={film.previewImage}/>
+          <img src={film.previewImage} alt={film.name}/>
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -61,7 +61,7 @@ function ReviewPage(): JSX.Element {
         </Header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img src={film.posterImage} alt="The Grand Budapest Hotel poster" width="218"
+          <img src={film.posterImage} alt={film.name} width="218"
             height="327"
           />
         </div>
