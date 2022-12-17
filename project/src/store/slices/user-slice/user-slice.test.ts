@@ -56,7 +56,7 @@ describe('Reducer: user-slice', () => {
 
   it('has user info when getUserData is fulfilled', () => {
     expect(userSlice.reducer(state, {type: getUserData.fulfilled.type, payload: userMock}))
-      .toEqual({auth: AuthStatus.Unknown, user: userMock});
+      .toEqual({auth: AuthStatus.Auth, user: userMock});
   });
 
 });

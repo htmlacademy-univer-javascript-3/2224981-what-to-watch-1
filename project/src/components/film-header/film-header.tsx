@@ -46,7 +46,7 @@ function FilmHeader({film}: FilmHeaderProps) {
           <span>Play</span>
         </button>
         <MyListButton film={filmState}/>
-        {auth === AuthStatus.Auth && <Link to={AppRoutes.FilmsReview} className="btn film-card__button">Add review</Link>}
+        {auth === AuthStatus.Auth && <Link to={`/${AppRoutes.FilmsRoot}${film.id}/${AppRoutes.FilmsReview}`} className="btn film-card__button">Add review</Link>}
       </div>
     </div>
   );

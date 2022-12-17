@@ -4,7 +4,7 @@ import {Footer} from '../../components/footer/footer';
 import {useAppDispatch, useAppSelector} from '../../hooks/store-hooks';
 import FilmHeader from '../../components/film-header/film-header';
 import {useEffect} from 'react';
-import {getPromo} from '../../store/api-actions/api-actions';
+import {getPromo} from '../../store/api-actions/get-promo';
 
 function MainPage(): JSX.Element {
   const films = useAppSelector((state) => state.filmsSlice.films);

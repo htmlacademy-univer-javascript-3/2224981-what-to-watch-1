@@ -1,7 +1,7 @@
 import FilmInfo from '../../../types/film-info';
 import {Comment} from '../../../types/comment';
 import {createSlice} from '@reduxjs/toolkit';
-import {getPromo} from '../../api-actions/api-actions';
+import {getPromo} from '../../api-actions/get-promo';
 
 export type FilmState = {
   selectedGenre: string,
