@@ -4,5 +4,6 @@ export enum ApiRoutes {
   Films = '/films',
   Similar = '/similar',
   Comments = '/comments',
-  Favorite = '/favorite'
+  Favorite = '/favorite',
+  Promo = '/promo'
 }

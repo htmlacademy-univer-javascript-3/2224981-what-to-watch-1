@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import FilmInfo from '../../types/film-info';
 import {dispatch} from '../../store';
-import {changeFavoriteStatus, getFavorite} from '../../store/api-actions';
+import {changeFavoriteStatus, getFavorite} from '../../store/api-actions/api-actions';
 import {useAppSelector} from '../../hooks/store-hooks';
 import AuthStatus from '../../const/auth-status';
 import {useNavigate} from 'react-router-dom';

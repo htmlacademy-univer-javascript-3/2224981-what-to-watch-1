@@ -6,7 +6,7 @@ import TabManager from '../../components/film-tabs/tab-manager/tab-manager';
 import Header, {HeaderClass} from '../../components/header/header';
 import {Footer} from '../../components/footer/footer';
 import {useAppDispatch, useAppSelector} from '../../hooks/store-hooks';
-import {getFullFilmInfo} from '../../store/api-actions';
+import {getFullFilmInfo} from '../../store/api-actions/api-actions';
 import {setComments, setFilm, setFilmsByGenre} from '../../store/slices/film-slice/film-slice';
 import Spinner from '../../components/spinner/spinner';
 import Page404 from '../../components/page-404/page-404';
@@ -49,7 +49,7 @@ function FilmPage(): JSX.Element {
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={film.previewImage}/>
+            <img src={film.previewImage} alt={film.name}/>
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -64,7 +64,7 @@ function FilmPage(): JSX.Element {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={film.posterImage} width="218" height="327"/>
+              <img src={film.posterImage} width="218" height="327" alt={film.name}/>
             </div>
 
             <div className="film-card__desc">

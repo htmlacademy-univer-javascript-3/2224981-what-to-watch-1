@@ -1,7 +1,6 @@
 import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
 import {getToken} from './token';
-import {setError} from '../store/slices/app-slice/app-slice';
-import {store} from '../store';
+import {handleError} from './handle-error';
 
 const BACKEND_URL = 'https://10.react.pages.academy/wtw';
 const TIMEOUT = 5000;
@@ -20,7 +19,6 @@ export const createApi = () => {
 
       if (token) {
         config.headers['x-token'] = token;
-        //config.headers['x-token'] = 'T2xpdmVyLmNvbm5lckBnbWFpbC5jb20=';
       }
 
       return config;
@@ -31,7 +29,7 @@ export const createApi = () => {
     (res: AxiosResponse) => res,
     (error:AxiosError<{error: string}>) => {
       if (error.response) {
-        store.dispatch(setError(error.response.data.error));
+        handleError(error.response.data.error);
       }
     }
   );

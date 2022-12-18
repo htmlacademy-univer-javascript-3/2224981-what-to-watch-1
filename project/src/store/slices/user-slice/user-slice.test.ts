@@ -1,5 +1,5 @@
-import {initialState, userSlice, UserState} from './user-slice';
-import {checkAuthAction, getUserData, loginAction, logoutAction} from '../../api-actions';
+import {INIT_STATE, userSlice, UserState} from './user-slice';
+import {checkAuthAction, getUserData, loginAction, logoutAction} from '../../api-actions/api-actions';
 import AuthStatus from '../../../const/auth-status';
 import {UserData} from '../../../types/user-data';
 
@@ -15,12 +15,12 @@ describe('Reducer: user-slice', () => {
   let state: UserState;
 
   beforeEach(() => {
-    state = initialState;
+    state = INIT_STATE;
   });
 
   it('without additional parameters doesnt change state', () => {
     expect(userSlice.reducer(undefined, {type: 'UNKNOWN_ACTION'}))
-      .toEqual(initialState);
+      .toEqual(INIT_STATE);
   });
 
   describe('Testing checkAuthAction', () => {
@@ -56,7 +56,7 @@ describe('Reducer: user-slice', () => {
 
   it('has user info when getUserData is fulfilled', () => {
     expect(userSlice.reducer(state, {type: getUserData.fulfilled.type, payload: userMock}))
-      .toEqual({auth: AuthStatus.Unknown, user: userMock});
+      .toEqual({auth: AuthStatus.Auth, user: userMock});
   });
 
 });

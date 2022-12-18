@@ -11,16 +11,31 @@ import ScrollToTop from '../scroll-to-top/scroll-to-top';
 
 import {AppStatus} from '../../types/app-status';
 import Spinner from '../spinner/spinner';
-import {useAppSelector} from '../../hooks/store-hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks/store-hooks';
 import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
 import PlayerPage from '../../pages/player/player-page';
 import Page404 from '../page-404/page-404';
-import React from 'react';
+import React, {useEffect} from 'react';
+import {getUserData} from '../../store/api-actions/api-actions';
 
 function App(): JSX.Element {
   const status = useAppSelector((state) => state.appSlice.status);
   const auth = useAppSelector((state) => state.userSlice.auth);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    let mounted = true;
+
+    if (mounted) {
+      dispatch(getUserData());
+    }
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
 
   if (auth === AuthStatus.Unknown || status === AppStatus.Loading) {
     return (

@@ -1,5 +1,5 @@
 import {FormEvent, useEffect, useRef, useState} from 'react';
-import {loginAction} from '../../store/api-actions';
+import {loginAction} from '../../store/api-actions/api-actions';
 import {INVALID_EMAIL_ERROR, INVALID_PASSWORD} from '../../const/login-errors';
 import {useAppDispatch, useAppSelector} from '../../hooks/store-hooks';
 import {setError} from '../../store/slices/app-slice/app-slice';

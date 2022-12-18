@@ -1,5 +1,5 @@
 import FilmInfo from '../../types/film-info';
-import {SyntheticEvent, useEffect, useRef, useState} from 'react';
+import {SyntheticEvent, useRef, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {formatFilmLeftTime} from '../../utils/time-format';
 import {checkFullScreen, CombinedElement, exitFullScreen, requestFullScreen} from '../../services/fullscreen-api';
@@ -13,15 +13,16 @@ export function VideoPlayer(props: VideoPlayerProps) {
   const playerRef = useRef<HTMLVideoElement | null>(null);
   const navigate = useNavigate();
 
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState(true);
   const [progress, setProgress] = useState(0);
   const [timeCode, setTimeCode] = useState(formatFilmLeftTime(props.film.runTime, 0));
 
   const update = (evt: SyntheticEvent<HTMLVideoElement>) => {
     if (playing) {
       const curTimeSec = evt.currentTarget.currentTime;
-      setTimeCode(formatFilmLeftTime(props.film.runTime, curTimeSec));
-      setProgress(curTimeSec / (props.film.runTime * 60));
+      const duration = evt.currentTarget.duration;
+      setTimeCode(formatFilmLeftTime(duration / 60, curTimeSec));
+      setProgress(curTimeSec / duration * 100);
     }
   };
 
@@ -45,21 +46,15 @@ export function VideoPlayer(props: VideoPlayerProps) {
     setPlaying(!playing);
   };
 
-  useEffect(() => {
-    let mounted = true;
-
-    if (mounted) {
-      togglePlayer();
-    }
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
   return (
     <div className="player" ref={parentRef}>
-      <video ref={playerRef} onTimeUpdate={update} className="player__video" poster={props.film.previewImage}>
+      <video ref={playerRef}
+        onTimeUpdate={update}
+        className="player__video"
+        poster={props.film.previewImage}
+        muted
+        autoPlay
+      >
         <source src={props.film.videoLink} type="video/mp4"/>
       </video>
 

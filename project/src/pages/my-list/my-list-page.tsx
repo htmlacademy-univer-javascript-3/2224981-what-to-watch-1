@@ -3,7 +3,7 @@ import Header, {HeaderClass} from '../../components/header/header';
 import {Footer} from '../../components/footer/footer';
 import {useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks/store-hooks';
-import {getFavorite} from '../../store/api-actions';
+import {getFavorite} from '../../store/api-actions/api-actions';
 import Spinner from '../../components/spinner/spinner';
 
 function MyListPage(): JSX.Element {

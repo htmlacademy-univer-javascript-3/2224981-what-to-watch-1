@@ -1,6 +1,7 @@
 import FilmInfo from '../../../types/film-info';
 import {Comment} from '../../../types/comment';
 import {createSlice} from '@reduxjs/toolkit';
+import {getPromo} from '../../api-actions/get-promo';
 
 export type FilmState = {
   selectedGenre: string,
@@ -8,21 +9,23 @@ export type FilmState = {
   films: FilmInfo[],
   film: FilmInfo | null,
   comments: Comment[],
-  favorites: FilmInfo[]
+  favorites: FilmInfo[],
+  promo: FilmInfo | null
 }
 
-export const initState: FilmState = {
+export const INIT_STATE: FilmState = {
   selectedGenre: 'all',
   oneGenreFilms: [],
   films: [],
   film: null,
   comments: [],
-  favorites: []
+  favorites: [],
+  promo: null
 };
 
 const filmSlice = createSlice({
   name: 'filmSlice',
-  initialState: initState,
+  initialState: INIT_STATE,
   reducers: {
     selectGenre(state, action) {
       state.selectedGenre = action.payload;
@@ -42,6 +45,12 @@ const filmSlice = createSlice({
     setFavorites(state, action) {
       state.favorites = action.payload;
     }
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(getPromo.fulfilled, (state, action) => {
+        state.promo = action.payload;
+      });
   }
 });
 
